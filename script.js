@@ -21,7 +21,11 @@ const translations = {
             "<strong>4. Install:</strong> Add to Home Screen for a native app experience and quick access."
         ],
         guideNote: "<strong>Note:</strong> All data is stored locally on your phone. Clearing your browser cache will reset your balance. Data does not carry over between devices.",
-        feedback: "Feedback"
+        feedback: "Feedback",
+        clearHistory: "CLEAR ALL",
+        confirmClear: "Are you sure you want to clear all history?",
+        lowBalanceWarning: "⚠️Low Balance",
+        toggleAlert: "Alert me when balance < RM 4"
     },
     ms: {
         currentBalance: "Baki Semasa",
@@ -45,7 +49,11 @@ const translations = {
             "<strong>4. Pasang:</strong> Tambah ke Skrin Utama (Home Screen) untuk pengalaman aplikasi natif dan akses pantas."
         ],
         guideNote: "<strong>Nota:</strong> Semua data disimpan secara tempatan di dalam telefon anda. Memadam cache pelayar akan mengosongkan baki anda. Data tidak akan dipindahkan antara peranti yang berbeza.",
-        feedback: "Maklum Balas"
+        feedback: "Maklum Balas",
+        clearHistory: "Padam Semua",
+        confirmClear: "Anda pasti mahu memadam semua rekod?",
+        lowBalanceWarning: "⚠️Baki Rendah",
+        toggleAlert: "Beri amaran bila baki < RM 4"
     },
     zh: {
         currentBalance: "当前余额",
@@ -69,7 +77,11 @@ const translations = {
             "<strong>4. 安装应用：</strong>点击“添加到主屏幕”，获得原生应用体验和快捷访问。"
         ],
         guideNote: "<strong>注意：</strong>所有数据都保存在您的手机本地。清除浏览器缓存将重置您的余额。数据不会在不同设备之间同步。",
-        feedback: "反馈"
+        feedback: "反馈",
+        clearHistory: "清除全部",
+        confirmClear: "您确定要清除所有记录吗？",
+        lowBalanceWarning: "⚠️低余额",
+        toggleAlert: "当余额 < RM 4 时提醒我"
     },
     ta: {
         currentBalance: "தற்போதைய இருப்பு",
@@ -93,12 +105,18 @@ const translations = {
             "<strong>4. நிறுவு (Install):</strong> விரைவான அணுகலுக்கு முகப்புத் திரையில் (Home Screen) சேர்க்கவும்."
         ],
         guideNote: "<strong>குறிப்பு:</strong> எல்லா தரவும் உங்கள் தொலைபேசியில் உள்நாட்டிலேயே சேமிக்கப்படும். உங்கள் பிரவுசர் தற்காலிக சேமிப்பை (cache) அழிப்பது உங்கள் இருப்பை மீட்டமைக்கும். தரவுகள் வெவ்வேறு சாதனங்களுக்கு இடையில் பகிரப்படாது.",
-        feedback: "கருத்து"
+        feedback: "கருத்து",
+        clearHistory: "அனைத்தையும் அழி",
+        confirmClear: "அனைத்து வரலாற்றையும் அழிக்க விரும்புகிறீர்களா?",
+        lowBalanceWarning: "⚠️குறைந்த இருப்பு",
+        toggleAlert: "இருப்பு < RM 4 ஆக இருக்கும்போது எச்சரி"
     }
 };
 
-// Language switching functionality
-let currentLang = localStorage.getItem('selectedLang') || 'en';
+let currentLang = localStorage.getItem('selectedLang') || 'en'; // language switching functionality
+let balance = parseInt(localStorage.getItem('balance')) || 0;
+let historyLog = JSON.parse(localStorage.getItem('historyLog')) || [];
+let alertEnabled = localStorage.getItem('alertEnabled') !== 'false'; // defaults to true
 
 function setLanguage(lang) {
     currentLang = lang;
@@ -118,6 +136,9 @@ function updateUI() {
     document.getElementById('guide-title').textContent = t.guideTitle;
     document.getElementById('guide-desc').textContent = t.guideDesc;
     document.getElementById('guide-how-title').textContent = t.guideHow;
+    document.getElementById('text-clear-history').textContent = t.clearHistory;
+    document.getElementById('low-balance-warning').textContent = t.lowBalanceWarning;
+    document.getElementById('text-toggle-alert').textContent = t.toggleAlert;
     
     const stepsList = document.getElementById('guide-steps-list');
     stepsList.innerHTML = '';
@@ -165,12 +186,16 @@ document.getElementById('lang-select').addEventListener('change', (e) => {
     setLanguage(e.target.value);
 });
 
-let balance = parseInt(localStorage.getItem('balance')) || 0;
-let historyLog = JSON.parse(localStorage.getItem('historyLog')) || [];
-
 function updateBalanceDisplay() {
     document.getElementById('balance-display').textContent = balance;
     localStorage.setItem('balance', balance);
+    
+    const warningText = document.getElementById('low-balance-warning');
+    if (balance < 4 && alertEnabled) {
+        warningText.classList.remove('hidden'); // Show it
+    } else {
+        warningText.classList.add('hidden'); // Hide it
+    }
 }
 
 function addTohistoryLog(type, amount) {
@@ -223,6 +248,26 @@ document.getElementById('btn-undo').addEventListener('click', () => {
     }
 });
 
+document.getElementById('clear-history-btn').addEventListener('click', () => {
+    const t = translations[currentLang];
+    
+    const isConfirmed = confirm(t.confirmClear);
+    
+    if (isConfirmed) {
+        historyLog = []; 
+        localStorage.setItem('historyLog', JSON.stringify(historyLog)); 
+        updatehistoryLogDisplay(); 
+    }
+});
+
+document.getElementById('alert-toggle').checked = alertEnabled;
+
+document.getElementById('alert-toggle').addEventListener('change', (e) => {
+    alertEnabled = e.target.checked; // update the variable
+    localStorage.setItem('alertEnabled', alertEnabled); // save to phone
+    updateBalanceDisplay(); // refresh the screen immediately to show/hide the text
+});
+
 updateBalanceDisplay();
 updateUI();
 
@@ -234,8 +279,8 @@ if ('serviceWorker' in navigator) {
             
             newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    if (confirm("New update available! (Added Multiple Languages). Click OK to refresh.")) {
-                        window.location.reload();
+                    if (confirm("New Update (v1.2) Available!\n\n• Added 'Clear All' history button\n• Added Low Balance alerts (< RM 4)\n• Added alert toggle switch\n• Improved UI and animations\n\nClick OK to refresh and update.")) {
+    window.location.reload();
                     }
                 }
             });
