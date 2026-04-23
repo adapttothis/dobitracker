@@ -1,4 +1,8 @@
-const CACHE_NAME = 'dobi-tracker-v1.2.1';
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
+});
+
+const CACHE_NAME = 'dobi-tracker-v1.2.3';
 const ASSETS = [
   './',
   './index.html',

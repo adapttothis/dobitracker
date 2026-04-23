@@ -291,3 +291,11 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+
+// Check if there is already an update waiting in the background
+if (registration.waiting) {
+    if (confirm("New Update (v1.2) Available!\n\n• Added 'Clear All' history button\n• Added Low Balance alerts (< RM 4)\n• Added alert toggle switch\n• Improved UI and animations\n\nClick OK to refresh and update.")) {
+        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        window.location.reload();
+    }
+}
