@@ -187,14 +187,17 @@ document.getElementById('lang-select').addEventListener('change', (e) => {
 });
 
 function updateBalanceDisplay() {
-    document.getElementById('balance-display').textContent = balance;
-    localStorage.setItem('balance', balance);
-    
+    const balanceDisplay = document.getElementById('balance-display');
     const warningText = document.getElementById('low-balance-warning');
-    if (balance < 4 && alertEnabled) {
-        warningText.classList.remove('hidden'); // Show it
+    
+    const currentBalance = Number(balance);
+    balanceDisplay.textContent = currentBalance;
+    localStorage.setItem('balance', currentBalance);
+    
+    if (currentBalance < 4 && alertEnabled === true) {
+        warningText.classList.remove('hidden');
     } else {
-        warningText.classList.add('hidden'); // Hide it
+        warningText.classList.add('hidden');
     }
 }
 
@@ -263,9 +266,10 @@ document.getElementById('clear-history-btn').addEventListener('click', () => {
 document.getElementById('alert-toggle').checked = alertEnabled;
 
 document.getElementById('alert-toggle').addEventListener('change', (e) => {
-    alertEnabled = e.target.checked; // update the variable
-    localStorage.setItem('alertEnabled', alertEnabled); // save to phone
-    updateBalanceDisplay(); // refresh the screen immediately to show/hide the text
+    alertEnabled = e.target.checked; 
+    localStorage.setItem('alertEnabled', alertEnabled); 
+    
+    updateBalanceDisplay();
 });
 
 updateBalanceDisplay();
