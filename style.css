@@ -1,0 +1,234 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f4f4f9; 
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px; 
+    background-color: #ffffff;
+    min-height: 100vh;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.feedback-link {
+    font-size: 0.85rem;
+    color: #4b5563;
+    text-decoration: none;
+    background-color: #f3f4f6;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease;
+}
+
+.feedback-link:hover, .feedback-link:active {
+    background-color: #e5e7eb;
+}
+
+#lang-select {
+    padding: 0.4rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 0.85rem;
+    background-color: #f9fafb;
+    outline: none;
+}
+
+.balance-section {
+    text-align: center;
+    padding: 2rem 0;
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.label {
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.balance-text {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -1px;
+}
+
+.action-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.primary-btn {
+    background-color: #2c3e50; 
+    color: white;
+    border: none;
+    padding: 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
+    touch-action: manipulation; 
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.primary-btn:active {
+    transform: scale(0.96); 
+}
+
+.topup-section {
+    display: flex;
+    gap: 0.5rem;
+}
+
+input[type="number"] {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+}
+
+.secondary-btn {
+    background-color: #e5e7eb;
+    color: #374151;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.history-section {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #eaeaea;
+    max-height: 250px; 
+    overflow-y: auto; 
+}
+
+.section-title {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.history-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.95rem;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-info strong {
+    display: block;
+    color: #374151;
+}
+
+.history-date {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.2rem;
+}
+
+.amount-negative { color: #ef4444; font-weight: 600; }
+.amount-positive { color: #10b981; font-weight: 600; }
+
+.app-footer {
+    margin-top: auto; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 0.95rem;
+    text-decoration: underline;
+    cursor: pointer;
+    align-self: center;
+}
+
+.disclaimer {
+    font-size: 0.7rem;
+    color: #a1a1aa;
+    line-height: 1.4;
+}
+
+/* Guide Section Styling */
+.guide-section {
+    width: 100%;
+    max-width: 400px;
+    padding: 3rem 1.5rem;
+    color: #4b5563;
+}
+
+.guide-content h2 { font-size: 1.5rem; color: #1f2937; margin-bottom: 1rem; }
+.guide-content h3 { font-size: 1.1rem; color: #374151; margin-top: 2rem; margin-bottom: 1rem; }
+.guide-content p { font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+.guide-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tech-note {
+    margin-top: 2.5rem;
+    padding: 1rem;
+    background-color: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 4px;
+}

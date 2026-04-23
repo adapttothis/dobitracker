@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XNG03F76HT"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-XNG03F76HT");
+    </script>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Satria Dobi Card Tracker</title>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2c3e50" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-container">
+      <div class="header-controls">
+        <a
+          href="https://forms.gle/yG3Z7oVDBDLAM9k5A"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="feedback-link"
+          id="text-feedback"
+          >💬 Feedback</a
+        >
+
+        <select id="lang-select">
+          <option value="en">English</option>
+          <option value="ms">Bahasa Melayu</option>
+          <option value="zh">中文</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+
+      <header class="balance-section">
+        <p class="label" id="text-current-balance">Current Balance</p>
+        <h1 class="balance-text">RM <span id="balance-display">0</span></h1>
+      </header>
+
+      <section class="action-section">
+        <button id="btn-wash" class="primary-btn action-btn">
+          Wash (-RM 4)
+        </button>
+        <button id="btn-dry" class="primary-btn action-btn">Dry (-RM 5)</button>
+      </section>
+
+      <section class="topup-section">
+        <input
+          type="number"
+          id="topup-input"
+          placeholder="Amount (e.g., 10)"
+          step="1"
+        />
+        <button id="btn-topup" class="secondary-btn">Reload</button>
+      </section>
+
+      <section class="history-section">
+        <h2 class="section-title" id="text-recent-activity">Recent Activity</h2>
+        <ul id="history-list" class="history-list"></ul>
+      </section>
+
+      <footer class="app-footer">
+        <button id="btn-undo" class="text-btn">Undo Last Tap</button>
+        <p class="disclaimer" id="text-disclaimer">
+          This is an independent student hobby project. Not affiliated with,
+          endorsed, or sponsored by Laundrax.
+        </p>
+      </footer>
+    </main>
+
+    <section class="guide-section">
+      <div class="guide-content">
+        <h2 id="guide-title">About This Project</h2>
+        <p id="guide-desc">
+          As a student at UTeM, I noticed it was hard to track exactly how much
+          balance is left on our laundry cards after a few washes. I built
+          Satria Dobi Tracker to solve that. It's a privacy-first, offline tool
+          to help us manage our laundry budget better.
+        </p>
+        <h3 id="guide-how-title">How to Use</h3>
+        <ul class="guide-steps" id="guide-steps-list"></ul>
+        <div class="tech-note">
+          <small id="guide-note"
+            ><strong>Note:</strong> All data is stored locally on your phone.
+            Clearing your browser cache will reset your balance. Data does not
+            carry over between devices.</small
+          >
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
